@@ -1,0 +1,12 @@
+'use strict';
+
+var mongoose = require('mongoose');
+
+module.exports = function(){
+	let bookSchema = mongoose.Schema({
+		title: String,		
+		author: String
+	});
+	
+	return mongoose.model('Book', bookSchema);
+};

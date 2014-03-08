@@ -1,0 +1,17 @@
+'use strict';
+
+var db,
+		mongoose = require('mongoose');
+
+module.exports = function(app){
+	mongoose.connect('mongodb://localhost/test');
+	db = mongoose.connection;
+
+	db.on('error', function(){
+		console.log('Error connecting to MongoDb');
+	});
+
+	db.on('open', function(){
+		console.log('Connection to MongoDb established');
+	}); 
+};

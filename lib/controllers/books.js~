@@ -1,0 +1,41 @@
+'use strict';
+
+let	Book = require('../models/book');
+
+exports.get = function(req, res){
+	Book.find(function(err, books){
+		res.json(books);
+	});
+};
+
+exports.post = function(req, res){
+	let book = new Book(req.body);
+	book.save(function(err, book){
+		if (err) throw err;
+		res.json(book);
+	});
+};
+
+exports.put = function(req, res){
+	let book = new Book(req.body).toObject();
+	delete book._id;
+
+	Book.findOneAndUpdate({_id: req.body._id}, book, {upsert: true}, function(err, book){
+		if (err) throw err;
+		res.json(book);
+	});
+
+	/*console.log(req.body._id);
+	let book = Book.find({_id: req.body._id}, function(err, book){
+		if (err) throw err;
+		res.json(book);
+	});*/
+	
+
+	/*let book = Book.findOne({_id: req.body._id})
+
+	let book = Book.update({_id: req.body._id}, {title: req.body.title, author: req.body.author}, {upsert: true}, function(err, book){
+		if (err) throw err;
+		res.json(book);
+	});*/
+};
